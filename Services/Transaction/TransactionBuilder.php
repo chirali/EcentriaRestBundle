@@ -10,7 +10,7 @@
 
 namespace Ecentria\Libraries\EcentriaRestBundle\Services\Transaction;
 
-use Ecentria\Libraries\EcentriaRestBundle\Entity\Transaction;
+use Ecentria\Libraries\EcentriaRestBundle\Model\Transaction;
 use Ecentria\Libraries\EcentriaRestBundle\Services\UUID;
 
 /**
@@ -54,6 +54,18 @@ class TransactionBuilder
      * @var string
      */
     protected $relatedIds;
+
+    /**
+     * Post Content
+     * @var array
+     */
+    private $postContent;
+
+    /**
+     * Post Content
+     * @var array
+     */
+    private $parameters;
 
     /**
      * RequestMethod setter
@@ -131,6 +143,52 @@ class TransactionBuilder
     }
 
     /**
+     * Post Content setter
+     *
+     * @param array $postContent
+     *
+     * @return TransactionBuilder
+     */
+    public function setPostContent($postContent)
+    {
+        $this->postContent = $postContent;
+        return $this;
+    }
+
+    /**
+     * Post Content getter
+     *
+     * @return array
+     */
+    public function getPostContent()
+    {
+        return $this->postContent;
+    }
+
+    /**
+     * Query Params setter
+     *
+     * @param array $parameters
+     *
+     * @return TransactionBuilder
+     */
+    public function setQueryParams($parameters)
+    {
+        $this->parameters = $parameters;
+        return $this;
+    }
+
+    /**
+     * Query Params getter
+     *
+     * @return array
+     */
+    public function getQueryParams()
+    {
+        return $this->parameters;
+    }
+
+    /**
      * Building transaction
      *
      * @return Transaction
@@ -147,7 +205,10 @@ class TransactionBuilder
             ->setRequestSource($this->requestSource)
             ->setModel($this->model)
             ->setCreatedAt($datetime)
-            ->setUpdatedAt($datetime);
+            ->setUpdatedAt($datetime)
+            ->setPostContent($this->postContent)
+            ->setQueryParams($this->parameters);
+
         return $transaction;
     }
 }
